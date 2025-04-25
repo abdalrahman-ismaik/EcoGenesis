@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.2d.muse": "1.0.0-pre.5",
     "com.unity.ai.navigation": "2.0.5",
     "com.unity.burst": "1.8.18",
     "com.unity.cinemachine": "2.10.3",
@@ -11,6 +12,10 @@
     "com.unity.inputsystem": "1.11.2",
     "com.unity.mathematics": "1.3.2",
     "com.unity.multiplayer.center": "1.0.0",
+    "com.unity.muse.animate": "1.2.0-exp.3",
+    "com.unity.muse.chat": "1.1.1-pre.4",
+    "com.unity.muse.sprite": "1.1.1",
+    "com.unity.muse.texture": "1.1.1",
     "com.unity.nuget.mono-cecil": "1.11.4",
     "com.unity.package-validation-suite": "0.22.0-preview",
     "com.unity.render-pipelines.core": "17.0.3",
