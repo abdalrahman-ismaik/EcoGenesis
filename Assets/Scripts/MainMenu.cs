@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     // Called when the "Play" button is pressed
     public void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene"); // Replace with your game scene's name
+        SceneManager.LoadScene("Mountains"); // Replace with your game scene's name
     }
 
     // Called when the "Settings" button is pressed
