@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -7971556573668897872}
   - component: {fileID: 2689975323307722132}
   - component: {fileID: 138434901373460923}
+  - component: {fileID: -1331948778156389418}
   m_Layer: 0
   m_Name: Mug Wood
   m_TagString: Trash
@@ -149,4 +150,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Porcelin and Pottery
+--- !u!65 &-1331948778156389418
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093585832671737841}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2596981, y: 0.3336544, z: 0.3599127}
+  m_Center: {x: 0.00035071373, y: 0.035714574, z: -0.032783546}

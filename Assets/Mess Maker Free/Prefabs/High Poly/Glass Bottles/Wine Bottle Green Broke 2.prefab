@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5294964675833843785}
   - component: {fileID: -4521506761059015797}
   - component: {fileID: 5945612867007590944}
+  - component: {fileID: 2553366855918027848}
   m_Layer: 0
   m_Name: Wine Bottle Green Broke 2
   m_TagString: Trash
@@ -149,4 +150,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Glass Bottle
+--- !u!65 &2553366855918027848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8322863303335674192}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19077358, y: 0.19089793, z: 0.58661956}
+  m_Center: {x: 0, y: -0.00012592971, z: 0.22058555}

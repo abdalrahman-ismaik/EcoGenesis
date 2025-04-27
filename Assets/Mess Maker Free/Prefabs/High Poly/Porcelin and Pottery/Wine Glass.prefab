@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5666654169891275666}
   - component: {fileID: 539845525563935602}
   - component: {fileID: 1400257272874005929}
+  - component: {fileID: 675636082598074186}
   m_Layer: 0
   m_Name: Wine Glass
   m_TagString: Trash
@@ -149,4 +150,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Porcelin and Pottery
+--- !u!65 &675636082598074186
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3016437080816719917}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1997758, y: 0.1997757, z: 0.3393286}
+  m_Center: {x: 0, y: -0.000019486994, z: -0.03408224}
