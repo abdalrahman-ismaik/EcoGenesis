@@ -229,68 +229,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4536291819999006714, guid: 57bc59eb149f5e5459dea44ded379c87, type: 3}
   m_PrefabInstance: {fileID: 4053646843354037550}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4136603388186099185
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 7358337561301073268}
-    m_Modifications:
-    - target: {fileID: 3230034147011233538, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_Name
-      value: Soda Can Green
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 197.72482
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 12.743853
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 157.24146
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
---- !u!4 &548330559744471563 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4536291819999006714, guid: bbc1f0fc0f45274428dade32ac94941e, type: 3}
-  m_PrefabInstance: {fileID: 4136603388186099185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5291272974477830210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -414,6 +352,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7557240043413461849, guid: 8d1907721f1c47446a102b00e73c8185, type: 3}
   m_PrefabInstance: {fileID: 5376866315948024900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5775054333318581638
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7358337561301073268}
+    m_Modifications:
+    - target: {fileID: 5016541032468592501, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_Name
+      value: Soda Can Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 197.72482
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.743853
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 157.24146
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+--- !u!4 &548330559744471563 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6321104359917076365, guid: b7286090293644a4e9711ac2d5119c08, type: 3}
+  m_PrefabInstance: {fileID: 5775054333318581638}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5780958275577950955
 PrefabInstance:

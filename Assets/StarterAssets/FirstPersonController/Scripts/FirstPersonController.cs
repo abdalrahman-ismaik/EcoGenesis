@@ -298,32 +298,25 @@ namespace StarterAssets
             }
         }
 
-        private void CameraRotation()
-        {
-            if (_input.look.sqrMagnitude >= _threshold)
+		private void CameraRotation()
+		{
+            // Check if the inventory is open; if so, don't allow camera rotation
+            if (InventorySystem.Instance.isOpen)
             {
-                float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-                
-                // Apply sensitivity adjustment
-                Vector2 sensitivityAdjustedLook = _input.look * CameraSensitivity;
-                
-                if (SmoothCameraRotation)
-                {
-                    _smoothedLookInput = Vector3.Lerp(_smoothedLookInput, 
-                        new Vector3(sensitivityAdjustedLook.x, sensitivityAdjustedLook.y, 0), 
-                        Time.deltaTime * CameraSmoothTime);
-                    
-                    _cinemachineTargetPitch += _smoothedLookInput.y * RotationSpeed * deltaTimeMultiplier;
-                    _rotationVelocity = _smoothedLookInput.x * RotationSpeed * deltaTimeMultiplier;
-                }
-                else
-                {
-                    _cinemachineTargetPitch += sensitivityAdjustedLook.y * RotationSpeed * deltaTimeMultiplier;
-                    _rotationVelocity = sensitivityAdjustedLook.x * RotationSpeed * deltaTimeMultiplier;
-                }
+                return; // Skip the camera rotation update if inventory is open
+            }
 
-                // Clamp the pitch rotation
-                _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+            // if there is an input
+            if (_input.look.sqrMagnitude >= _threshold)
+			{
+				//Don't multiply mouse input by Time.deltaTime
+				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+				
+				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
+
+				// clamp our pitch rotation
+				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
                 // Update Cinemachine camera target pitch
                 if (CinemachineCameraTarget != null)

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 61
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e203a0283bb54aaa8b1f1d51dfe17e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetGuid: e40f1c030ab211840bc1540312b446e6
+  m_GenerationSettings:
+    scaleFactor: 2
+    resizeToTargetSize: 0
+    targetSize: 256
+    pixelBlockSize: 8
+    mode: 0
+    outlineThickness: 0
+    referenceImage: {fileID: 0}
+    isUpscaleExpanded: 1
+    isRecolorExpanded: 0
+    isPixelateExpanded: 0
+    isRemoveBgExpanded: 0
+  m_SelectedMode: 
+  m_ArtifactContainer:
+  - m_SpriteId: e40f1c030ab211840bc1540312b446e6
+    m_Artifacts: []
+    m_SelectedArtifactIDs: []
+    m_FreeMask: 
+    m_Masks: []
+    m_FreeDoodle: 
+    m_Doodles: []
+  m_SelectedSpriteRect:
+    m_Name: com.unity.2d.muse.spritenhancer.data full texture temp rect
+    m_OriginalName: 
+    m_Pivot: {x: 0, y: 0}
+    m_Alignment: 0
+    m_Border: {x: 0, y: 0, z: 0, w: 0}
+    m_CustomData: 
+    m_Rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 512
+      height: 512
+    m_SpriteID: e40f1c030ab211840bc1540312b446e6
+  references:
+    version: 2
+    RefIds: []
