@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class TpInteract : MonoBehaviour
 {
-   [Header("UI References")]
-    public GameObject promptUI;   // Your “Press E…” TMP GameObject
-    public GameObject tpMenuUI;   // Your TP Menu panel
+    [Header("UI References")]
+    public GameObject promptUI;   // Your “Press E…” TMP object
+    public GameObject tpMenuUI;   // Your TP Menu root panel
 
     bool playerNearby = false;
 
     void Start()
     {
-        // Hide both at start
         promptUI.SetActive(false);
         tpMenuUI.SetActive(false);
+        
+        // Ensure cursor starts hidden/locked
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnTriggerEnter(Collider other)
@@ -30,38 +33,44 @@ public class TpInteract : MonoBehaviour
         {
             playerNearby = false;
             promptUI.SetActive(false);
-            tpMenuUI.SetActive(false); // also close TP menu if they walk away
+            CloseMenu();
         }
     }
 
     void Update()
     {
-        // Open TP menu
+        // Open on E
         if (playerNearby && Input.GetKeyDown(KeyCode.E))
         {
             promptUI.SetActive(false);
             tpMenuUI.SetActive(true);
+            OpenMenu();
         }
 
-        // Close TP menu on ESC
+        // Close on Esc
         if (tpMenuUI.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
             tpMenuUI.SetActive(false);
-            if (playerNearby)
-                promptUI.SetActive(true);
+            if (playerNearby) promptUI.SetActive(true);
+            CloseMenu();
         }
     }
 
-
-
-    // Optional: If you want to close the TP menu when the player clicks outside of it
-    void OnMouseDown()
+    void OpenMenu()
     {
-        if (tpMenuUI.activeSelf)
-        {
-            tpMenuUI.SetActive(false);
-            if (playerNearby)
-                promptUI.SetActive(true);
-        }
+        // Show and unlock cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        // Optionally pause or disable player controls here:
+        // Example: PlayerController.Instance.enabled = false;
+    }
+
+    void CloseMenu()
+    {
+        // Hide and lock cursor
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        // Re-enable player controls if you disabled them:
+        // Example: PlayerController.Instance.enabled = true;
     }
 }
