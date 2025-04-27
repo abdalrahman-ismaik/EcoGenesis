@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6861350994022523672}
   - component: {fileID: 5868107043273938280}
   - component: {fileID: 4786846261395098384}
+  - component: {fileID: 8491376252126245235}
   m_Layer: 0
   m_Name: Wine Bottle Red Broke
   m_TagString: Trash
@@ -136,3 +137,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.19077358, y: 0.19159429, z: 0.41960636}
   m_Center: {x: -0.0000000037252903, y: 0.00048688054, z: -0.09359141}
+--- !u!114 &8491376252126245235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924935055946310828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemName: Glass Bottle

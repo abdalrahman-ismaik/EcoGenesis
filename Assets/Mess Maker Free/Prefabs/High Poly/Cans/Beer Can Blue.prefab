@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 6569849321130073917}
   - component: {fileID: -5140751445081918177}
   - component: {fileID: 3132804861246143896}
+  - component: {fileID: 2480499380755375857}
   m_Layer: 0
   m_Name: Beer Can Blue
   m_TagString: Trash
@@ -223,3 +224,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.14606942, y: 0.14616859, z: 0.4214427}
   m_Center: {x: 0, y: 0.00007810444, z: -0.08473414}
+--- !u!114 &2480499380755375857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079580285254665744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemName: Can
