@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5574232401924893130}
   - component: {fileID: 7851806277218877140}
   - component: {fileID: -355161581354332346}
+  - component: {fileID: -4535319941820316905}
   m_Layer: 0
   m_Name: Beer Bottle Green with Label
   m_TagString: Trash
@@ -150,7 +151,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Glass Bottle
+--- !u!65 &-4535319941820316905
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631681890585385247}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.112412974, y: 0.11241394, z: 0.48414254}
+  m_Center: {x: 0, y: 0.00020496547, z: -0.0026914477}
 --- !u!1 &6338368095915491944
 GameObject:
   m_ObjectHideFlags: 0
