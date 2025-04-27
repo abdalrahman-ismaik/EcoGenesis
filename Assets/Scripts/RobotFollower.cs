@@ -42,24 +42,16 @@ public class RobotFollower : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject messagePanel;
+    public GameObject canvas;
     public TMP_Text messageText;
     public TMP_Text tasksText;
     public KeyCode confrontKey = KeyCode.F;
 
-    [Header("Laser Settings")]
-    [Tooltip("Reference to the laser GameObject")]
-    public GameObject laserObject;
-    [Tooltip("How quickly the laser activates")]
-    public float laserActivationSpeed = 0.5f;
-
-    private bool isLaserActive = false;
-    
     private Vector3 currentVelocity;
     private float currentAngularVelocity;
     private Vector3 lastTargetPosition;
     private bool isRepositioning;
     private bool isConfronting;
-    private Coroutine confrontRoutine;
 
     void Awake()
     {
@@ -79,10 +71,6 @@ public class RobotFollower : MonoBehaviour
         {
             Debug.LogWarning("RobotFollower: TextMeshPro components not assigned!");
         }
-        if (laserObject != null)
-        {
-            laserObject.SetActive(false);
-        }
     }
 
     void Update()
@@ -93,6 +81,8 @@ public class RobotFollower : MonoBehaviour
         if (Input.GetKeyDown(confrontKey))
         {
             ToggleConfront();
+            if (messagePanel) messagePanel.SetActive(isConfronting);
+            if (canvas) canvas.SetActive(isConfronting);
         }
 
         if (!isConfronting)
@@ -141,7 +131,7 @@ public class RobotFollower : MonoBehaviour
         lastTargetPosition = targetPosition;
     }
 
-        void ConfrontBehavior()
+    void ConfrontBehavior()
     {
         // Position in front of player
         Vector3 targetPosition = target.position + target.forward * minDistance;
@@ -163,48 +153,13 @@ public class RobotFollower : MonoBehaviour
                 targetRotation,
                 rotationSpeed * Time.deltaTime
             );
-
-            StartCoroutine(ActivateLaser());
-        }
-    }
-// Add new method for laser activation
-    IEnumerator ActivateLaser()
-    {
-        isLaserActive = true;
-        laserObject.SetActive(true);
-        
-        // Optional: Add fade-in effect for the laser
-        if (laserObject.TryGetComponent<Renderer>(out Renderer renderer))
-        {
-            Material material = renderer.material;
-            Color color = material.color;
-            float alpha = 0f;
-            
-            while (alpha < 1f)
-            {
-                alpha += Time.deltaTime / laserActivationSpeed;
-                color.a = alpha;
-                material.color = color;
-                yield return null;
-            }
         }
     }
 
-    // Update ToggleConfront method
     void ToggleConfront()
     {
         isConfronting = !isConfronting;
         if (messagePanel) messagePanel.SetActive(isConfronting);
-        
-        // Deactivate laser when not confronting
-        if (!isConfronting)
-        {
-            if (laserObject != null)
-            {
-                laserObject.SetActive(false);
-                isLaserActive = false;
-            }
-        }
         
         if (isConfronting)
         {
