@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 978705522861871796}
   - component: {fileID: 1020069367788481429}
   - component: {fileID: -7180025190128674941}
+  - component: {fileID: 8457758794660333163}
   m_Layer: 0
   m_Name: Fish Bone
   m_TagString: Trash
@@ -149,4 +150,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Food
+--- !u!65 &8457758794660333163
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5438048726324099442}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.77, y: 0.25, z: 0.32}
+  m_Center: {x: -0.014439732, y: -0.00089067034, z: 0.002033908}

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 113616437297604883}
   - component: {fileID: -8120722927184218745}
   - component: {fileID: -7368057896089821678}
+  - component: {fileID: 6276192008468089513}
   m_Layer: 0
   m_Name: Beer Can Blue Crushed
   m_TagString: Trash
@@ -150,7 +151,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Can
+--- !u!65 &6276192008468089513
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937326242163579350}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.92, y: 0.54, z: 0.58}
+  m_Center: {x: -0.06268224, y: 0.014692768, z: -0.10682482}
 --- !u!1 &4581694020254849032
 GameObject:
   m_ObjectHideFlags: 0
