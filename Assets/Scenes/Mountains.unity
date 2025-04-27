@@ -754,6 +754,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Broken Pottery
       objectReference: {fileID: 0}
+    - target: {fileID: 3339617716762108944, guid: b55d178e96dcaf14594261b0732f960b, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339617716762108944, guid: b55d178e96dcaf14594261b0732f960b, type: 3}
+      propertyPath: m_Size.y
+      value: 1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339617716762108944, guid: b55d178e96dcaf14594261b0732f960b, type: 3}
+      propertyPath: m_Size.z
+      value: 1.13
+      objectReference: {fileID: 0}
     - target: {fileID: 7449981739900460535, guid: b55d178e96dcaf14594261b0732f960b, type: 3}
       propertyPath: m_LocalScale.x
       value: 6
@@ -772,7 +784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7449981739900460535, guid: b55d178e96dcaf14594261b0732f960b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 48.66
+      value: 47.66
       objectReference: {fileID: 0}
     - target: {fileID: 7449981739900460535, guid: b55d178e96dcaf14594261b0732f960b, type: 3}
       propertyPath: m_LocalPosition.z

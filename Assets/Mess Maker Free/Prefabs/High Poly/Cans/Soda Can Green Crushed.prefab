@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9078554235970929958}
   - component: {fileID: -5796025497648136495}
   - component: {fileID: 3099599078692626350}
+  - component: {fileID: -8216176592536967813}
   m_Layer: 0
   m_Name: Soda Can Green Crushed
   m_TagString: Trash
@@ -150,7 +151,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Can
+--- !u!65 &-8216176592536967813
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3230034147011233538}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4, y: 0.26, z: 0.37}
+  m_Center: {x: -0.040118553, y: 0.00005344674, z: -0.07565241}
 --- !u!1 &7351139419438461794
 GameObject:
   m_ObjectHideFlags: 0
