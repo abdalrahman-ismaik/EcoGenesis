@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4087545331444513733}
   - component: {fileID: 1737265751692972814}
   - component: {fileID: 8856568425812943244}
+  - component: {fileID: -480537116060186636}
   m_Layer: 0
   m_Name: Chicken Bone
   m_TagString: Trash
@@ -136,3 +137,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.05077925, y: 0.047639776, z: 0.37764555}
   m_Center: {x: 0.00051897764, y: 0.00015224144, z: -0.00001437217}
+--- !u!114 &-480537116060186636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153803601918318987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemName: Food

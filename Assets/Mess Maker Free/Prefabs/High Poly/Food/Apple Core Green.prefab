@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7122666863795742170}
   - component: {fileID: -6039453417877905145}
   - component: {fileID: -3587610022505847960}
+  - component: {fileID: -4270572927565672665}
   m_Layer: 0
   m_Name: Apple Core Green
   m_TagString: Trash
@@ -136,3 +137,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.10669698, y: 0.11389827, z: 0.27152482}
   m_Center: {x: 0.0013839956, y: -0.0037208386, z: 0.019100096}
+--- !u!114 &-4270572927565672665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124406358728296116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c577dd60f576a3f4e815c0170414fa24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemName: Food
