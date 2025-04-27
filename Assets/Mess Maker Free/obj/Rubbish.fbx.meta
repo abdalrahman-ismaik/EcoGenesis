@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: 6ee79a39487f7bb4abefb33640b1f96a
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213803
+  packageName: Mess Maker FREE
+  packageVersion: 1.0
+  assetPath: Assets/Mess Maker Free/obj/Rubbish.fbx
+  uploadId: 481919
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -13,7 +20,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Beer Can
-    second: {fileID: 2100000, guid: 1d355cf47a4575f4cb94c79976391c6a, type: 2}
+    second: {fileID: 2100000, guid: 53eee7cd88f521c499c9c2b4a993651c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -24,6 +31,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Fish Bone
     second: {fileID: 2100000, guid: 09c68016b003f564297d4478ae9c3ee4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 2eca8f0c22069114dbbd46a2f7da3b24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Soda Can
+    second: {fileID: 2100000, guid: 4966f1481219a9f47afe8133f0b0d13e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -39,9 +56,8 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -64,10 +80,12 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -79,6 +97,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -89,6 +108,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -121,14 +141,9 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 213803
-  packageName: Mess Maker FREE
-  packageVersion: 1.0
-  assetPath: Assets/Mess Maker Free/obj/Rubbish.fbx
-  uploadId: 481919

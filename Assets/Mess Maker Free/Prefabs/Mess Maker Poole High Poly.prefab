@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2310102654890545456}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5699375971059769725
 MonoBehaviour:
@@ -43,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7dff76949f3d84c8980c069cfd03df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
   DrawDistance: 25
   MessMakerLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   StartSize: 2
   PooledObjects:
   - {fileID: 937326242163579350, guid: 1a55f6ba8b72d7b4e90f993836efaad7, type: 3}
@@ -90,6 +92,9 @@ MonoBehaviour:
   - {fileID: 3093585832671737841, guid: 0c151e8b229a7e34ab8f87c12c618a32, type: 3}
   - {fileID: 8412863031436712038, guid: 18b94829f32bc194d9cf03aa6c43561c, type: 3}
   - {fileID: 3016437080816719917, guid: f6fab6cd91c4f5c44a9dcff4b0ae3ca4, type: 3}
+  RandomiseScale: 0
+  MinimumScale: 0
+  MaximumScale: 0
   RandomiseXRotation: 1
   RandomiseYRotation: 1
   RandomiseZRotation: 1
