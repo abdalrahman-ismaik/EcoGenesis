@@ -131,8 +131,14 @@ namespace StarterAssets
 
 		private void CameraRotation()
 		{
-			// if there is an input
-			if (_input.look.sqrMagnitude >= _threshold)
+            // Check if the inventory is open; if so, don't allow camera rotation
+            if (InventorySystem.Instance.isOpen)
+            {
+                return; // Skip the camera rotation update if inventory is open
+            }
+
+            // if there is an input
+            if (_input.look.sqrMagnitude >= _threshold)
 			{
 				//Don't multiply mouse input by Time.deltaTime
 				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
