@@ -9,7 +9,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class FirstPersonController : MonoBehaviour
+    public class FirstPersonController : MonoBehaviour, PickupItem.IEnableFlyingMode
     {
         [Header("Player Movement")]
         [Tooltip("Move speed of the character in m/s")]
@@ -45,6 +45,12 @@ namespace StarterAssets
         public bool EnableLandingEffect = true;
         [Tooltip("Force applied when landing")]
         public float LandingForce = 0.15f;
+
+        [Header("Jetpack Settings")]
+        [Tooltip("Enable jetpack functionality")]
+        public bool HasJetpack = false;
+        [Tooltip("Force applied when using jetpack")]
+        public float JetpackForce = 15.0f;
 
         [Header("Ground Detection")]
         [Tooltip("If the character is grounded or not")]
@@ -89,7 +95,7 @@ namespace StarterAssets
         // Private variables
         private float _cinemachineTargetPitch;
         private float _speed;
-        private float _rotationVelocity; // Fixed: Added missing variable
+        private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
         private float _jumpTimeoutDelta;
@@ -270,41 +276,41 @@ namespace StarterAssets
             _audioSource.PlayOneShot(FootstepSounds[index], FootstepVolume);
         }
 
-        private void GroundedCheck()
-        {
-            _wasGroundedLastFrame = Grounded;
+        // private void GroundedCheck()
+        // {
+        //     _wasGroundedLastFrame = Grounded;
             
-            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+        //     Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+        //     Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
             
-            if (Grounded)
-            {
-                _lastGroundedPosition = transform.position;
-            }
-        }
+        //     if (Grounded)
+        //     {
+        //         _lastGroundedPosition = transform.position;
+        //     }
+        // }
 
-        private void HandleLanding()
-        {
-            if (Grounded && !_wasGroundedLastFrame && EnableLandingEffect)
-            {
-                // Apply landing impact force
-                float fallDistance = _lastGroundedPosition.y - transform.position.y;
-                if (fallDistance > 0.5f)
-                {
-                    _impact = Vector3.down * Mathf.Clamp(fallDistance * LandingForce, 0, 0.5f);
+        // private void HandleLanding()
+        // {
+        //     if (Grounded && !_wasGroundedLastFrame && EnableLandingEffect)
+        //     {
+        //         // Apply landing impact force
+        //         float fallDistance = _lastGroundedPosition.y - transform.position.y;
+        //         if (fallDistance > 0.5f)
+        //         {
+        //             _impact = Vector3.down * Mathf.Clamp(fallDistance * LandingForce, 0, 0.5f);
                     
-                    // Play landing sound here if you have one
-                }
-            }
-        }
+        //             // Play landing sound here if you have one
+        //         }
+        //     }
+        // }
 
 		private void CameraRotation()
 		{
             // Check if the inventory is open; if so, don't allow camera rotation
-            if (InventorySystem.Instance.isOpen)
-            {
-                return; // Skip the camera rotation update if inventory is open
-            }
+            // if (InventorySystem.Instance.isOpen)
+            // {
+            //     return; // Skip the camera rotation update if inventory is open
+            // }
 
             // if there is an input
             if (_input.look.sqrMagnitude >= _threshold)
@@ -395,65 +401,109 @@ namespace StarterAssets
             _controller.Move(moveVector);
         }
 
-        private void JumpAndGravity()
+		private void GroundedCheck()
         {
+            _wasGroundedLastFrame = Grounded;
+            
+            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+            
             if (Grounded)
             {
-                _fallTimeoutDelta = FallTimeout;
-                _hasDoubleJumped = false;
-
-                // Reset vertical velocity when grounded
-                if (_verticalVelocity < 0.0f)
-                {
-                    _verticalVelocity = -2f;
-                }
-
-                // Jump
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
-                {
-                    // Calculate jump velocity
-                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                    _input.jump = false;
-                }
-
-                // Jump timeout
-                if (_jumpTimeoutDelta >= 0.0f)
-                {
-                    _jumpTimeoutDelta -= Time.deltaTime;
-                }
-            }
-            else
-            {
-                // Reset jump timeout
-                _jumpTimeoutDelta = JumpTimeout;
-
-                // Double jump
-                if (AllowDoubleJump && _input.jump && !_hasDoubleJumped)
-                {
-                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -1.8f * Gravity);
-                    _hasDoubleJumped = true;
-                    _input.jump = false;
-                }
-
-                // Fall timeout
-                if (_fallTimeoutDelta >= 0.0f)
-                {
-                    _fallTimeoutDelta -= Time.deltaTime;
-                }
-
-                // No jumping while falling
-                if (!AllowDoubleJump || _hasDoubleJumped)
-                {
-                    _input.jump = false;
-                }
-            }
-
-            // Apply gravity (with terminal velocity)
-            if (_verticalVelocity < _terminalVelocity)
-            {
-                _verticalVelocity += Gravity * Time.deltaTime;
+                _lastGroundedPosition = transform.position;
             }
         }
+		private void HandleLanding()
+        {
+            if (Grounded && !_wasGroundedLastFrame && EnableLandingEffect)
+            {
+                // Apply landing impact force
+                float fallDistance = _lastGroundedPosition.y - transform.position.y;
+                if (fallDistance > 0.5f)
+                {
+                    _impact = Vector3.down * Mathf.Clamp(fallDistance * LandingForce, 0, 0.5f);
+                    
+                    // Play landing sound here if you have one
+                }
+            }
+        }
+
+		private void JumpAndGravity()
+		{
+			if (Grounded)
+			{
+			_fallTimeoutDelta = FallTimeout;
+			_hasDoubleJumped = false;
+
+			// Reset vertical velocity when grounded
+			if (_verticalVelocity < 0.0f)
+			{
+				_verticalVelocity = -2f;
+			}
+
+			// Jump
+			if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+			{
+				if (HasJetpack)
+				{
+				// Apply jetpack force when jump is pressed
+				_verticalVelocity = JetpackForce;
+				}
+				else
+				{
+				// Regular jump
+				_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+				}
+
+				// Only reset jump input if not using jetpack
+				if (!HasJetpack)
+				{
+				_input.jump = false;
+				}
+			}
+
+			// Jump timeout
+			if (_jumpTimeoutDelta >= 0.0f)
+			{
+				_jumpTimeoutDelta -= Time.deltaTime;
+			}
+			}
+			else
+			{
+			// Reset jump timeout
+			_jumpTimeoutDelta = JumpTimeout;
+
+			// Jetpack in air
+			if (HasJetpack && _input.jump)
+			{
+				// Add force while holding jump
+				_verticalVelocity += JetpackForce * Time.deltaTime;
+				_verticalVelocity = Mathf.Clamp(_verticalVelocity, -_terminalVelocity, JetpackForce);
+			}
+			// Double jump
+			else if (AllowDoubleJump && _input.jump && !_hasDoubleJumped && !HasJetpack)
+			{
+				_verticalVelocity = Mathf.Sqrt(JumpHeight * -1.8f * Gravity);
+				_hasDoubleJumped = true;
+				_input.jump = false;
+			}
+
+			// Fall timeout
+			if (_fallTimeoutDelta >= 0.0f)
+			{
+				_fallTimeoutDelta -= Time.deltaTime;
+			}
+
+			// Apply gravity if not using jetpack or not holding jump
+			if (!HasJetpack || !_input.jump)
+			{
+				if (_verticalVelocity < _terminalVelocity)
+				{
+				_verticalVelocity += Gravity * Time.deltaTime;
+				}
+			}
+			}
+		}
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
@@ -477,6 +527,13 @@ namespace StarterAssets
             // Draw slope check ray
             Gizmos.color = transparentBlue;
             Gizmos.DrawRay(transform.position, Vector3.down * ((_controller.height / 2) + 0.5f));
+        }
+        
+        // IEnableFlyingMode implementation
+        public void EnableFlyingMode()
+        {
+            HasJetpack = true;
+            Debug.Log("Jetpack activated! Press and hold jump to fly.");
         }
     }
 }

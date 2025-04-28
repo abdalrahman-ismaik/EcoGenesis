@@ -1,83 +1,129 @@
-// 4/25/2025 AI-Tag
-// This was created with assistance from Muse, a Unity Artificial Intelligence product
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject settingsPanel; // Reference to the Settings Panel
-    public GameObject mainMenuPanel; // Reference to the Main Menu Panel
+    public GameObject settingsPanel;
+    public GameObject mainMenuPanel;
+    public GameObject tutorialPanel;
+    public AudioSource musicSource;
+    public AudioSource windSource;
+    public UnityEngine.UI.Slider musicSlider;
+    public UnityEngine.UI.Slider windSlider;
 
-    public GameObject tutorialPanel; // Reference to the Tutorial Panel
-    public AudioSource musicSource; // Reference to the music Audio Source
-    public AudioSource windSource;  // Reference to the wind Audio Source
-    public UnityEngine.UI.Slider musicSlider; // Reference to the Music Slider
-    public UnityEngine.UI.Slider windSlider;  // Reference to the Wind Slider
+    void Awake()
+    {
+        Time.timeScale = 1f;
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
+        }
+        if (mainMenuPanel != null)
+        {
+            mainMenuPanel.SetActive(true);
+        }
+        if (tutorialPanel != null)
+        {
+            tutorialPanel.SetActive(false);
+        }
+        if (musicSource != null)
+        {
+            musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        }
+        if (windSource != null)
+        {
+            windSource.volume = PlayerPrefs.GetFloat("WindVolume", 1f);
+            windSource.Stop(); // Ensure the wind sound does not play
+        }
+        if (musicSlider != null)
+        {
+            musicSlider.value = musicSource != null ? musicSource.volume : 1f;
+        }
+        if (windSlider != null)
+        {
+            windSlider.value = windSource != null ? windSource.volume : 1f;
+        }
+    }
+
     void Start()
-{
-    // Initialize the slider values to match the current volume
-    musicSlider.value = musicSource.volume;
-    windSlider.value = windSource.volume;
+    {
+        if (musicSlider != null && musicSource != null)
+        {
+            musicSlider.value = musicSource.volume;
+            musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        }
+        if (windSlider != null && windSource != null)
+        {
+            windSlider.value = windSource.volume;
+            windSlider.onValueChanged.AddListener(SetWindVolume);
+        }
 
-    // Add listeners to sliders to update volume in real-time
-    musicSlider.onValueChanged.AddListener(SetMusicVolume);
-    windSlider.onValueChanged.AddListener(SetWindVolume);
-    mainMenuPanel.SetActive(true); // Show the Main Menu Panel
-    settingsPanel.SetActive(false); // Hide the Settings Panel
-    tutorialPanel.SetActive(false); // Hide the Tutorial Panel
+        mainMenuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
+    }
 
-}
-    // Called when the "Play" button is pressed
     public void PlayGame()
     {
-        SceneManager.LoadScene("Mountains"); // Replace with your game scene's name
+        SceneManager.LoadScene("Mountains");
     }
 
-    // Called when the "Settings" button is pressed
     public void OpenSettings()
-    {   
-        mainMenuPanel.SetActive(false); // Hide the Main Menu Panel
-        settingsPanel.SetActive(true); // Show the Settings Panel
-        tutorialPanel.SetActive(false); // Hide the Tutorial Panel
+    {
+        mainMenuPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+        tutorialPanel.SetActive(false);
     }
 
-    // Called to close the Settings Panel
     public void CloseSettings()
-    {   
-        mainMenuPanel.SetActive(true); // Show the Main Menu Panel
+    {
+        mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
-        tutorialPanel.SetActive(false); // Hide the Tutorial Panel
-
+        tutorialPanel.SetActive(false);
     }
 
     public void OpenTutorial()
-    {   
-        mainMenuPanel.SetActive(false); // Hide the Main Menu Panel
-        settingsPanel.SetActive(false); // Hide the Settings Panel
-        tutorialPanel.SetActive(true); // Show the Tutorial Panel
+    {
+        mainMenuPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(true);
     }
+
     public void CloseTutorial()
-    {   
-        mainMenuPanel.SetActive(true); // Show the Main Menu Panel
-        settingsPanel.SetActive(false); // Hide the Settings Panel
-        tutorialPanel.SetActive(false); // Hide the Tutorial Panel
+    {
+        mainMenuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
     }
+
     public void SetMusicVolume(float volume)
-{
-    musicSource.volume = volume;
-}
+    {
+        if (musicSource != null)
+        {
+            musicSource.volume = volume;
+            PlayerPrefs.SetFloat("MusicVolume", volume);
+        }
+    }
 
-public void SetWindVolume(float volume)
-{
-    windSource.volume = volume;
-}
+    public void SetWindVolume(float volume)
+    {
+        if (windSource != null)
+        {
+            windSource.volume = volume;
+            PlayerPrefs.SetFloat("WindVolume", volume);
+        }
+    }
 
-    // Called when the "Quit" button is pressed
     public void QuitGame()
     {
-        Debug.Log("Quit Game");
-        Application.Quit(); // Only works in a built application
+        #if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
     }
 }
