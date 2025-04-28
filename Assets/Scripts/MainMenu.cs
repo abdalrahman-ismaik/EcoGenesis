@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject settingsPanel; // Reference to the Settings Panel
     public GameObject mainMenuPanel; // Reference to the Main Menu Panel
+
+    public GameObject tutorialPanel; // Reference to the Tutorial Panel
     public AudioSource musicSource; // Reference to the music Audio Source
     public AudioSource windSource;  // Reference to the wind Audio Source
     public UnityEngine.UI.Slider musicSlider; // Reference to the Music Slider
@@ -34,6 +36,7 @@ public class MainMenu : MonoBehaviour
     {   
         mainMenuPanel.SetActive(false); // Hide the Main Menu Panel
         settingsPanel.SetActive(true); // Show the Settings Panel
+        tutorialPanel.SetActive(false); // Hide the Tutorial Panel
     }
 
     // Called to close the Settings Panel
@@ -41,6 +44,21 @@ public class MainMenu : MonoBehaviour
     {   
         mainMenuPanel.SetActive(true); // Show the Main Menu Panel
         settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(false); // Hide the Tutorial Panel
+
+    }
+
+    public void OpenTutorial()
+    {   
+        mainMenuPanel.SetActive(false); // Hide the Main Menu Panel
+        settingsPanel.SetActive(false); // Hide the Settings Panel
+        tutorialPanel.SetActive(true); // Show the Tutorial Panel
+    }
+    public void CloseTutorial()
+    {   
+        mainMenuPanel.SetActive(true); // Show the Main Menu Panel
+        settingsPanel.SetActive(false); // Hide the Settings Panel
+        tutorialPanel.SetActive(false); // Hide the Tutorial Panel
     }
     public void SetMusicVolume(float volume)
 {
