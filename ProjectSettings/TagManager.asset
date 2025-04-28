@@ -7,11 +7,12 @@ TagManager:
   - CinemachineTarget
   - Trash
   - Slot
+  - DirtPatch
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // This script is used to mark objects in the scene as interactable
 // and provide their display name when the player looks at them
@@ -27,6 +28,7 @@ public class InteractableObject : MonoBehaviour
             {
                 InventorySystem.Instance.AddToInventory(ItemName);
                 Debug.Log("Item added to inventory.");
+                BiomeProgressManager.Instance.CollectTrash(DetermineBiome());  // Pass biome name based on location
                 Destroy(gameObject);
             }
 
@@ -53,5 +55,28 @@ public class InteractableObject : MonoBehaviour
         {
             playerInRange = false;
         }
+    }
+
+    // Determine the biome based on the player's location
+    private string DetermineBiome()
+    {
+        // Get the name of the active scene
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Determine biome based on the scene name
+        if (currentSceneName.Contains("Mountains"))
+        {
+            return "Mountains";
+        }
+        else if (currentSceneName.Contains("Desert"))
+        {
+            return "Desert";
+        }
+        else if (currentSceneName.Contains("City"))
+        {
+            return "City";
+        }
+
+        return "Unknown";
     }
 }
