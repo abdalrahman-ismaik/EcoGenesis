@@ -24,6 +24,10 @@ public class MainMenu : MonoBehaviour
     // Add listeners to sliders to update volume in real-time
     musicSlider.onValueChanged.AddListener(SetMusicVolume);
     windSlider.onValueChanged.AddListener(SetWindVolume);
+    mainMenuPanel.SetActive(true); // Show the Main Menu Panel
+    settingsPanel.SetActive(false); // Hide the Settings Panel
+    tutorialPanel.SetActive(false); // Hide the Tutorial Panel
+
 }
     // Called when the "Play" button is pressed
     public void PlayGame()
