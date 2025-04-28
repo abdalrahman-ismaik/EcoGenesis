@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+
 
 // Manages the player's inventory UI screen toggle functionality
 public class InventorySystem : MonoBehaviour
@@ -31,11 +33,13 @@ public class InventorySystem : MonoBehaviour
         {
             // Destroy duplicates to maintain singleton behavior
             Destroy(gameObject);
+            return;
         }
         else
         {
             // Set this object as the singleton instance
             Instance = this;
+            DontDestroyOnLoad(gameObject); // This makes it persist across scenes
         }
     }
 
@@ -109,6 +113,17 @@ public class InventorySystem : MonoBehaviour
         itemList.Add(itemName);
     }
 
+    public void RebuildInventoryUI()
+    {
+        foreach (string itemName in itemList)
+        {
+            whatSlotToEquip = FindNextEmptySlot();
+            GameObject item = Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
+            item.transform.SetParent(whatSlotToEquip.transform);
+        }
+    }
+
+
     private GameObject FindNextEmptySlot()
     {
         foreach (GameObject slot in slotList)
@@ -120,4 +135,19 @@ public class InventorySystem : MonoBehaviour
         }
         return new GameObject();
     }
+    void OnEnable()
+{
+    SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    void OnDisable()
+    {
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+    RebuildInventoryUI();
+    }
+
 }

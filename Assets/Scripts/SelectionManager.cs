@@ -12,6 +12,7 @@ public class SelectionManager : MonoBehaviour
 
     //pointer in on the target
     public bool onTarget;
+    public GameObject selectedObject;
 
     // UI GameObject that displays interaction info
     public GameObject interaction_Info_UI;
@@ -56,6 +57,7 @@ public class SelectionManager : MonoBehaviour
             if (interactable && interactable.playerInRange)
             {
                 onTarget = true;
+                selectedObject=interactable.gameObject;
                 // Display the item's name in the interaction UI
                 interaction_text.text = interactable.GetItemName();
                 interaction_Info_UI.SetActive(true);
