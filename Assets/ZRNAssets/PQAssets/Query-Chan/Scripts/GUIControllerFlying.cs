@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement; // Add this line
 
 public class GUIControllerFlying : MonoBehaviour {
 	
@@ -159,7 +160,7 @@ public class GUIControllerFlying : MonoBehaviour {
 		
 		if (GUI.Button (new Rect (Screen.width -100,700,100,100), "to Attack Mode"))
 		{
-			Application.LoadLevel("03_OperateQuery_Attack");
+			SceneManager.LoadScene("03_OperateQuery_Attack");
 		}
 
 	}

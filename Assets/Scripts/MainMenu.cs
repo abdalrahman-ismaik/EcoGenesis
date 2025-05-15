@@ -1,70 +1,72 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject settingsPanel;
-    public GameObject mainMenuPanel;
-    public GameObject tutorialPanel;
-    public AudioSource musicSource;
-    public AudioSource windSource;
-    public UnityEngine.UI.Slider musicSlider;
-    public UnityEngine.UI.Slider windSlider;
+    [Header("Panels")]
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject tutorialPanel;
 
-    void Awake()
+    [Header("Audio")]
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource windSource;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider windSlider;
+
+    private void Awake()
     {
-        Time.timeScale = 1f;
-
-        if (settingsPanel != null)
-        {
-            settingsPanel.SetActive(false);
-        }
-        if (mainMenuPanel != null)
-        {
-            mainMenuPanel.SetActive(true);
-        }
-        if (tutorialPanel != null)
-        {
-            tutorialPanel.SetActive(false);
-        }
-        if (musicSource != null)
-        {
-            musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
-        }
-        if (windSource != null)
-        {
-            windSource.volume = PlayerPrefs.GetFloat("WindVolume", 1f);
-            windSource.Stop(); // Ensure the wind sound does not play
-        }
-        if (musicSlider != null)
-        {
-            musicSlider.value = musicSource != null ? musicSource.volume : 1f;
-        }
-        if (windSlider != null)
-        {
-            windSlider.value = windSource != null ? windSource.volume : 1f;
-        }
+        InitializeUI();
     }
 
-    void Start()
+    private void InitializeUI()
     {
+        // Find references if not assigned in inspector
+        if (settingsPanel == null)
+            settingsPanel = GameObject.Find("SettingsPanel");
+        if (mainMenuPanel == null)
+            mainMenuPanel = GameObject.Find("MainMenuPanel");
+        if (tutorialPanel == null)
+            tutorialPanel = GameObject.Find("TutorialPanel");
+        
+        // Find audio components if not assigned
+        if (musicSource == null)
+            musicSource = GameObject.Find("MusicSource")?.GetComponent<AudioSource>();
+        if (windSource == null)
+            windSource = GameObject.Find("WindSource")?.GetComponent<AudioSource>();
+        if (musicSlider == null)
+            musicSlider = GameObject.Find("MusicSlider")?.GetComponent<Slider>();
+        if (windSlider == null)
+            windSlider = GameObject.Find("WindSlider")?.GetComponent<Slider>();
+
+        // Initialize sliders
         if (musicSlider != null && musicSource != null)
         {
             musicSlider.value = musicSource.volume;
+            musicSlider.onValueChanged.RemoveAllListeners();
             musicSlider.onValueChanged.AddListener(SetMusicVolume);
         }
+
         if (windSlider != null && windSource != null)
         {
             windSlider.value = windSource.volume;
+            windSlider.onValueChanged.RemoveAllListeners();
             windSlider.onValueChanged.AddListener(SetWindVolume);
         }
 
-        mainMenuPanel.SetActive(true);
-        settingsPanel.SetActive(false);
-        tutorialPanel.SetActive(false);
+        // Set initial panel states
+        SetPanelStates(true, false, false);
+    }
+
+    private void SetPanelStates(bool mainMenu, bool settings, bool tutorial)
+    {
+        if (mainMenuPanel != null) mainMenuPanel.SetActive(mainMenu);
+        if (settingsPanel != null) settingsPanel.SetActive(settings);
+        if (tutorialPanel != null) tutorialPanel.SetActive(tutorial);
     }
 
     public void PlayGame()
@@ -74,48 +76,34 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
-        mainMenuPanel.SetActive(false);
-        settingsPanel.SetActive(true);
-        tutorialPanel.SetActive(false);
+        SetPanelStates(false, true, false);
     }
 
     public void CloseSettings()
     {
-        mainMenuPanel.SetActive(true);
-        settingsPanel.SetActive(false);
-        tutorialPanel.SetActive(false);
+        SetPanelStates(true, false, false);
     }
 
     public void OpenTutorial()
     {
-        mainMenuPanel.SetActive(false);
-        settingsPanel.SetActive(false);
-        tutorialPanel.SetActive(true);
+        SetPanelStates(false, false, true);
     }
 
     public void CloseTutorial()
     {
-        mainMenuPanel.SetActive(true);
-        settingsPanel.SetActive(false);
-        tutorialPanel.SetActive(false);
+        SetPanelStates(true, false, false);
     }
 
     public void SetMusicVolume(float volume)
     {
         if (musicSource != null)
-        {
             musicSource.volume = volume;
-            PlayerPrefs.SetFloat("MusicVolume", volume);
-        }
     }
 
     public void SetWindVolume(float volume)
     {
         if (windSource != null)
-        {
             windSource.volume = volume;
-            PlayerPrefs.SetFloat("WindVolume", volume);
-        }
     }
 
     public void QuitGame()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3088398078059378013}
   - component: {fileID: 608899987987266939}
   - component: {fileID: 6098611177468598745}
+  - component: {fileID: 4817885381189971794}
   m_Layer: 5
   m_Name: Glass Bottle
   m_TagString: Untagged
@@ -88,3 +89,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24bdec5e0a970414a930391b2fd11bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &4817885381189971794
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2320197176304624244}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

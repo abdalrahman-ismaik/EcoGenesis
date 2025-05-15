@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
             mountainTasksCompleted++;
         else if (currentScene == "City")
             cityTasksCompleted++;
+
     }
 
     public bool AllTasksCompleted()

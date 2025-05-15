@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8137230413419041223}
   - component: {fileID: 8192844907030478557}
   - component: {fileID: 1612502441747021711}
+  - component: {fileID: 3460354287182185627}
   m_Layer: 5
   m_Name: Food
   m_TagString: Untagged
@@ -88,3 +89,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24bdec5e0a970414a930391b2fd11bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &3460354287182185627
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6178790280408810170}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

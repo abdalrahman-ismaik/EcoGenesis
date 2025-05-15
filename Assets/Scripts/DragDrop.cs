@@ -1,16 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-// This script allows UI elements (like inventory items) to be dragged and dropped using Unity's event system.
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    // RectTransform for this UI object
     private RectTransform rectTransform;
-
-    // CanvasGroup used to control visibility and raycast blocking
     private CanvasGroup canvasGroup;
 
     // Static reference to track the item currently being dragged
@@ -22,7 +15,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     private void Awake()
     {
-        // Get required components on awake
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -30,7 +22,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     // Called when dragging begins
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("OnBeginDrag");
+        Debug.Log($"OnBeginDrag: {gameObject.name}");  // Debugging the start of the drag
 
         // Make the item semi-transparent
         canvasGroup.alpha = 0.6f;
@@ -52,6 +44,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     // Called continuously while the item is being dragged
     public void OnDrag(PointerEventData eventData)
     {
+        // Debugging to track drag movement
+        Debug.Log($"OnDrag: {gameObject.name} - Moving to: {rectTransform.position}");
+
         // Move the item with the mouse cursor, accounting for canvas scale
         rectTransform.anchoredPosition += eventData.delta;
     }
@@ -59,17 +54,18 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     // Called when dragging ends
     public void OnEndDrag(PointerEventData eventData)
     {
+        // Debugging the end of the drag
+        Debug.Log($"OnEndDrag: {gameObject.name}");
+
         // Clear the static reference
         itemBeingDragged = null;
 
-        // If the item wasn't successfully dropped somewhere new, return it to the original spot
+        // If the item wasn't dropped in a valid slot, return it to the original position
         if (transform.parent == startParent || transform.parent == transform.root)
         {
             transform.position = startPosition;
             transform.SetParent(startParent);
         }
-
-        Debug.Log("OnEndDrag");
 
         // Restore full visibility and re-enable raycasts
         canvasGroup.alpha = 1f;

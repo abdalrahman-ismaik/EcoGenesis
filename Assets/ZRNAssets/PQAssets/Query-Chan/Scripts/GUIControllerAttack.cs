@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement; // Add this line
 
 public class GUIControllerAttack : MonoBehaviour {
 
@@ -147,7 +148,7 @@ public class GUIControllerAttack : MonoBehaviour {
 		
 		if (GUI.Button (new Rect (Screen.width -100,700,100,100), "to Stand Mode"))
 		{
-			Application.LoadLevel("01_OperateQuery_Standing");
+			SceneManager.LoadScene("01_OperateQuery_Standing");
 		}
 		
 	}

@@ -3,51 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using UnityEngine.UI;
 
-
-// Manages the player's inventory UI screen toggle functionality
 public class InventorySystem : MonoBehaviour
 {
-    // Singleton instance for global access
     public static InventorySystem Instance { get; set; }
 
     // Reference to the inventory UI panel in the scene
     public GameObject inventoryScreenUI;
 
     public List<GameObject> slotList = new List<GameObject>();
-    public List<string> itemList = new List<string>();
+    public List<GameObject> itemList = new List<GameObject>();  // List of actual item objects
+    public List<string> itemNames = new List<string>();  // List to store item names
 
     private GameObject itemToAdd;
     private GameObject whatSlotToEquip;
 
-    //public bool isFull;
-
-    // Tracks whether the inventory screen is currently open
     public bool isOpen;
 
-    // Ensures there's only one instance of the InventorySystem
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            // Destroy duplicates to maintain singleton behavior
             Destroy(gameObject);
             return;
         }
         else
         {
-            // Set this object as the singleton instance
             Instance = this;
-            DontDestroyOnLoad(gameObject); // This makes it persist across scenes
+            DontDestroyOnLoad(gameObject);
         }
     }
 
-    // Initialize variables
     void Start()
     {
-        isOpen = false; // Inventory starts closed
-
+        isOpen = false;
         PopulateSlotList();
     }
 
@@ -62,29 +52,25 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    // Listens for keypresses to open/close inventory
     void Update()
     {
-        // If 'I' key is pressed and inventory is closed, open it
         if (Input.GetKeyDown(KeyCode.I) && !isOpen)
         {
-            Debug.Log("i is pressed");
-            inventoryScreenUI.SetActive(true); // Show inventory UI
-            Cursor.lockState = CursorLockMode.None; // Unlock cursor when inventory is open
-            Cursor.visible = true; // Make cursor visible
+            inventoryScreenUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             isOpen = true;
         }
-        // If 'I' key is pressed again while inventory is open, close it
         else if (Input.GetKeyDown(KeyCode.I) && isOpen)
         {
-            inventoryScreenUI.SetActive(false); // Hide inventory UI
-            Cursor.lockState = CursorLockMode.Locked; // Lock cursor when inventory is closed
-            Cursor.visible = false; // Hide cursor again
+            inventoryScreenUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             isOpen = false;
         }
     }
 
-    public bool checkIfFull()
+    public bool CheckIfFull()
     {
         int counter = 0;
 
@@ -96,33 +82,39 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-        if (counter == 21)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return counter == 21;  // Assuming 21 slots
     }
-    public void AddToInventory(String itemName)
+
+    public void AddToInventory(string itemName)
     {
+        if (CheckIfFull()) return;  // Don't add if full
+
+        itemNames.Add(itemName);
         whatSlotToEquip = FindNextEmptySlot();
+
+        // Instantiate the item and add it to the slot
         itemToAdd = Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
         itemToAdd.transform.SetParent(whatSlotToEquip.transform);
-        itemList.Add(itemName);
+
+        // Ensure that the item has the DragDrop script attached
+        if (itemToAdd.GetComponent<DragDrop>() == null)
+        {
+            itemToAdd.AddComponent<DragDrop>();
+        }
+
+        // Add the item to the list and update UI
+        itemList.Add(itemToAdd);
     }
 
     public void RebuildInventoryUI()
     {
-        foreach (string itemName in itemList)
+        foreach (GameObject item in itemList)
         {
             whatSlotToEquip = FindNextEmptySlot();
-            GameObject item = Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
-            item.transform.SetParent(whatSlotToEquip.transform);
+            GameObject itemUI = Instantiate(item, whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
+            itemUI.transform.SetParent(whatSlotToEquip.transform);
         }
     }
-
 
     private GameObject FindNextEmptySlot()
     {
@@ -133,21 +125,50 @@ public class InventorySystem : MonoBehaviour
                 return slot;
             }
         }
-        return new GameObject();
-    }
-    void OnEnable()
-{
-    SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    
-    void OnDisable()
-    {
-    SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-    
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-    RebuildInventoryUI();
+        return null;
     }
 
+    public bool HasItem(string itemName)
+    {
+        foreach (GameObject item in itemList)
+        {
+            if (item.name == itemName+"(Clone)")
+            {
+                return true;  // Item is found
+            }
+            {
+                return true;  // Item is found
+            }
+        }
+        return false;  // Item is not found
+    }
+
+    public void RemoveItem(string itemName)
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i].name == itemName)
+            {
+                Destroy(itemList[i]);  // Remove the item from the inventory
+                itemList.RemoveAt(i);  // Remove the reference from the list
+                return;
+            }
+        }
+    }
+
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        RebuildInventoryUI();
+    }
 }
