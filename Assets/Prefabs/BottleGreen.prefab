@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8402550865928293230}
   - component: {fileID: 6053842400890929178}
   m_Layer: 0
-  m_Name: Beer Bottle Green
+  m_Name: BottleGreen
   m_TagString: Trash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
