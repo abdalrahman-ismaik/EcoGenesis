@@ -41,11 +41,9 @@ public class RobotFollower : MonoBehaviour
     public float tiltAmount = 15f;
 
     [Header("UI Elements")]
-    public GameObject messagePanel;
-    public GameObject canvas;
-    public TMP_Text messageText;
-    public TMP_Text tasksText;
+    public GameObject aiChatBotCanvas; // Reference to the new AI chat bot canvas
     public KeyCode confrontKey = KeyCode.F;
+    // Removed messagePanel, messageText
 
     private Vector3 currentVelocity;
     private float currentAngularVelocity;
@@ -63,14 +61,9 @@ public class RobotFollower : MonoBehaviour
         }
         lastTargetPosition = target != null ? target.position : transform.position;
         
-        // Initialize UI
-        if (messagePanel) messagePanel.SetActive(false);
+        // Initialize AI ChatBot Canvas
+        if (aiChatBotCanvas) aiChatBotCanvas.SetActive(false);
         
-        // Verify TMP components
-        if (messageText == null || tasksText == null)
-        {
-            Debug.LogWarning("RobotFollower: TextMeshPro components not assigned!");
-        }
     }
 
     void Update()
@@ -81,8 +74,7 @@ public class RobotFollower : MonoBehaviour
         if (Input.GetKeyDown(confrontKey))
         {
             ToggleConfront();
-            if (messagePanel) messagePanel.SetActive(isConfronting);
-            if (canvas) canvas.SetActive(isConfronting);
+            if (aiChatBotCanvas) aiChatBotCanvas.SetActive(isConfronting);
         }
 
         if (!isConfronting)
@@ -93,9 +85,6 @@ public class RobotFollower : MonoBehaviour
         {
             ConfrontBehavior();
         }
-
-        // Update UI
-        UpdateTasksDisplay();
     }
 
     void NormalFollowBehavior()
@@ -159,40 +148,18 @@ public class RobotFollower : MonoBehaviour
     void ToggleConfront()
     {
         isConfronting = !isConfronting;
-        if (messagePanel) messagePanel.SetActive(isConfronting);
-        
+        if (aiChatBotCanvas) aiChatBotCanvas.SetActive(isConfronting);
+
+        // Enable or disable the cursor and unlock/lock it
         if (isConfronting)
         {
-            ShowMessage("Current Environment Status");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
-    }
-
-    public void ShowMessage(string message)
-    {
-        if (messageText != null)
+        else
         {
-            messageText.SetText(message); // Using TMP's SetText method
-        }
-    }
-
-    void UpdateTasksDisplay()
-    {
-        if (tasksText != null && GameManager.Instance != null)
-        {
-            string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            int completed = 0;
-            
-            if (scene == "Desert")
-                completed = GameManager.Instance.desertTasksCompleted;
-            else if (scene == "Mountain")
-                completed = GameManager.Instance.mountainTasksCompleted;
-            else if (scene == "City")
-                completed = GameManager.Instance.cityTasksCompleted;
-
-            tasksText.SetText(string.Format("Tasks: {0}/{1}\nEnvironment Health: {2:F0}%", 
-                completed, 
-                GameManager.Instance.tasksPerScene,
-                (completed * 100f / GameManager.Instance.tasksPerScene)));
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
