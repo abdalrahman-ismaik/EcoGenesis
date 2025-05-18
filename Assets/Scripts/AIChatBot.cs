@@ -22,15 +22,17 @@ public class AIChatBot : MonoBehaviour
     void Start()
     {
         // Use environment variable for API key instead of hardcoding
-        string apiKey = System.Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+        string apiKey = "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";
         if (string.IsNullOrEmpty(apiKey))
         {
-            Debug.LogError("OpenAI API key not found in environment variables. Please set OPENAI_API_KEY.");
+            Debug.Log("OpenAI API key not found in environment variables. Please set OPENAI_API_KEY.");
             enabled = false;
             return;
+        } else
+        {
+            Debug.Log("OpenAI API key found.");
         }
         api = new OpenAIAPI(apiKey);
-
         messages = new List<ChatMessage>
         {
             new ChatMessage(ChatMessageRole.System, @"You are ECHO, an AI companion in the environmental restoration game EcoGenesis. Here's your core knowledge:
@@ -72,8 +74,11 @@ public class AIChatBot : MonoBehaviour
 
             Respond in character as ECHO, maintaining a helpful, educational tone while weaving in local UAE context and environmental facts. If players ask about topics outside these themes, guide them back to environmental and game-related discussions.")
         };
-
-        sendButton.onClick.AddListener(() => GetResponse());
+        sendButton.onClick.AddListener(() =>
+        {
+            Debug.Log("Button clicked!");
+            GetResponse();
+        });
         textField.text = "ECHO: Hello! I'm ECHO, your AI companion in EcoGenesis. How can I assist you today?";
     }
 
@@ -103,4 +108,10 @@ public class AIChatBot : MonoBehaviour
         textField.text += "You: " + userMessage.TextContent + "\n\nECHO: " + responseMessage.TextContent;
         sendButton.enabled = true;
     }
+    // This must be public, return void, and take no parameters
+public void OnSendButtonClicked()
+{
+    GetResponse();
+}
+
 }

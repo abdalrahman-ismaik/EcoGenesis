@@ -2023,7 +2023,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 616555512}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1516461241}
+        m_TargetAssemblyTypeName: AIChatBot, Assembly-CSharp
+        m_MethodName: OnSendButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &616555512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6243,15 +6255,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 145339295053872719, guid: aae62fd8a8999c94f8c833a6c83fb566, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2186375711516429885, guid: aae62fd8a8999c94f8c833a6c83fb566, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2186375711516429885, guid: aae62fd8a8999c94f8c833a6c83fb566, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449023906927977953, guid: aae62fd8a8999c94f8c833a6c83fb566, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276247608894772430, guid: aae62fd8a8999c94f8c833a6c83fb566, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8051943073838989252, guid: aae62fd8a8999c94f8c833a6c83fb566, type: 3}
       propertyPath: m_IsActive
