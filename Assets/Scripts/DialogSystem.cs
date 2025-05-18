@@ -55,6 +55,23 @@ public class DialogSystem : MonoBehaviour
         });
     }
 
+    private void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    private void OnSceneUnloaded(UnityEngine.SceneManagement.Scene scene)
+    {
+        StopAllCoroutines();
+        HideDialog();
+        dialogQueue.Clear();
+    }
+
     public void ShowDialogSequence(IEnumerable<string> messages)
     {
         dialogQueue.Clear();
@@ -122,6 +139,10 @@ public class DialogSystem : MonoBehaviour
 
     private void Update()
     {
+        // Freeze dialog system if game is paused
+        if (PauseMenu.GameIsPaused)
+            return;
+
         if (isWaitingForInput && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             isWaitingForInput = false;
