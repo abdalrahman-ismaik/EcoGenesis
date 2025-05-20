@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using TMPro;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -86,6 +88,33 @@ namespace StarterAssets
         [Tooltip("Time between footsteps")]
         public float FootstepInterval = 0.5f;
 
+        [Header("Jetpack Settings")]
+        [Tooltip("Whether the player has collected the jetpack")]
+        public bool HasJetpack = false;
+        [Tooltip("Whether the jetpack is currently active")]
+        private bool _jetpackActive = false;
+        [Tooltip("Movement speed when jetpack is active")]
+        public float JetpackMoveSpeed = 15.0f;
+        [Tooltip("Sprint speed when jetpack is active")]
+        public float JetpackSprintSpeed = 20.0f;
+        [Tooltip("How much fuel is consumed per second")]
+        public float FuelConsumptionRate = 0.2f; // Reduced from 1f to make fuel last longer
+        [Tooltip("Current fuel level")]
+        private float _currentFuelTimer = 0f;
+
+        [Header("Jetpack UI")]
+        [Tooltip("Reference to the TextMeshProUGUI component that displays fuel percentage")]
+        public TextMeshProUGUI fuelText;
+        [Tooltip("Maximum fuel amount")]
+        public float MaxFuel = 100f;
+        [Tooltip("Current fuel amount")]
+        private float _currentFuel;
+
+        // Store original speeds for reverting when jetpack is deactivated
+        private float _originalMoveSpeed;
+        private float _originalSprintSpeed;
+        private bool _originalEnableFootsteps;
+
         // Private variables
         private float _cinemachineTargetPitch;
         private float _speed;
@@ -130,13 +159,13 @@ namespace StarterAssets
         private bool OnSteepSlope()
         {
             if (!Grounded) return false;
-            
+
             if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, (_controller.height / 2) + 0.5f))
             {
                 float angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
                 return angle > MaxSlopeAngle;
             }
-            
+
             return false;
         }
 
@@ -144,12 +173,16 @@ namespace StarterAssets
         private Vector3 GetSlopeMoveDirection(Vector3 direction)
         {
             if (!OnSteepSlope()) return direction;
-            
-            return Vector3.ProjectOnPlane(direction, _slopeHit.normal).normalized;
-        }
 
-        private void Awake()
+            return Vector3.ProjectOnPlane(direction, _slopeHit.normal).normalized;
+        }        private void Awake()
         {
+            // Store original values
+            _originalMoveSpeed = MoveSpeed;
+            _originalSprintSpeed = SprintSpeed;
+            _originalEnableFootsteps = EnableFootsteps;
+            _currentFuel = MaxFuel; // Initialize fuel
+            
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -163,6 +196,8 @@ namespace StarterAssets
                 _audioSource.spatialBlend = 1.0f;
                 _audioSource.volume = FootstepVolume;
             }
+            
+            UpdateFuelUI(); // Initialize fuel UI
         }
 
         private void Start()
@@ -180,18 +215,16 @@ namespace StarterAssets
             _originalHeight = _controller.height;
             _lastGroundedPosition = transform.position;
             _wasGroundedLastFrame = Grounded;
-            
+
             if (CinemachineCameraTarget != null)
             {
                 _initialCameraPosition = CinemachineCameraTarget.transform.localPosition;
             }
-            
+
             // Lock cursor to screen center and hide it
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }
-
-        private void Update()
+        }        private void Update()
         {
             GroundedCheck();
             HandleLanding();
@@ -202,12 +235,93 @@ namespace StarterAssets
             {
                 HandleFootsteps();
             }
+
+            // Check for jetpack toggle
+            if (HasJetpack && Input.GetKeyDown(KeyCode.J))
+            {
+                bool hasFuel = HasEnoughFuel() && InventorySystem.Instance.itemNames.Contains("HydrogenFuel");
+                if (!_jetpackActive && !hasFuel)
+                {
+                    DialogSystem.Instance.ShowDialog("No hydrogen fuel! Collect hydrogen fuel from sand or mountains to power your jetpack.");
+                    return;
+                }
+
+                _jetpackActive = !_jetpackActive;
+                if (_jetpackActive)
+                {
+                    // Store current speeds if they've been modified
+                    _originalMoveSpeed = MoveSpeed;
+                    _originalSprintSpeed = SprintSpeed;
+                    _originalEnableFootsteps = EnableFootsteps;
+                    
+                    // Apply jetpack speeds
+                    MoveSpeed = JetpackMoveSpeed;
+                    SprintSpeed = JetpackSprintSpeed;
+                    EnableFootsteps = false;
+                    
+                    _currentFuelTimer = 0f;
+                    
+                    Debug.Log($"Jetpack activated. Speed set to {MoveSpeed}/{SprintSpeed}");
+                    DialogSystem.Instance.ShowDialog("Jetpack activated! Using sustainable hydrogen fuel to power your flight.");
+                }
+                else
+                {
+                    // Restore original speeds
+                    MoveSpeed = _originalMoveSpeed;
+                    SprintSpeed = _originalSprintSpeed;
+                    EnableFootsteps = _originalEnableFootsteps;
+                    
+                    Debug.Log($"Jetpack deactivated. Speed restored to {MoveSpeed}/{SprintSpeed}");
+                    DialogSystem.Instance.ShowDialog("Jetpack deactivated. Conserving hydrogen fuel.");
+                }
+                UpdateFuelUI();
+            }
+
+            // Handle fuel consumption
+            if (_jetpackActive)
+            {
+                _currentFuelTimer += Time.deltaTime;
+                if (_currentFuelTimer >= FuelConsumptionRate)
+                {
+                    _currentFuelTimer = 0f;
+                    _currentFuel = Mathf.Max(0f, _currentFuel - 1f);
+                    UpdateFuelUI();
+                    
+                    if (_currentFuel <= 0f)
+                    {
+                        // Remove fuel from inventory
+                        List<string> inventory = InventorySystem.Instance.itemNames;
+                        int fuelIndex = inventory.FindIndex(item => item == "HydrogenFuel");
+                        
+                        if (fuelIndex != -1)
+                        {
+                            // Remove the fuel item
+                            GameObject fuelItem = InventorySystem.Instance.itemList[fuelIndex];
+                            InventorySystem.Instance.itemList.RemoveAt(fuelIndex);
+                            InventorySystem.Instance.itemNames.RemoveAt(fuelIndex);
+                            Destroy(fuelItem);
+                            
+                            _currentFuel = MaxFuel; // Refill fuel
+                            DialogSystem.Instance.ShowDialog("Using hydrogen fuel...");
+                        }
+                        else
+                        {
+                            // No more fuel, deactivate jetpack
+                            _jetpackActive = false;
+                            MoveSpeed = _originalMoveSpeed;
+                            SprintSpeed = _originalSprintSpeed;
+                            EnableFootsteps = _originalEnableFootsteps;
+                            DialogSystem.Instance.ShowDialog("Out of hydrogen fuel! The jetpack has been deactivated.");
+                        }
+                    }
+                }
+            }
         }
 
         private void LateUpdate()
         {
             CameraRotation();
-            
+
             if (EnableHeadBob && Grounded && _speed > 0.1f)
             {
                 ApplyHeadBob();
@@ -226,18 +340,18 @@ namespace StarterAssets
         private void ApplyHeadBob()
         {
             if (CinemachineCameraTarget == null) return;
-            
+
             _headBobTimer += Time.deltaTime * HeadBobSpeed * (_speed / MoveSpeed);
-            
+
             float bobOffsetY = Mathf.Sin(_headBobTimer) * HeadBobAmount;
             float bobOffsetX = Mathf.Cos(_headBobTimer / 2) * HeadBobAmount * 0.5f;
-            
+
             Vector3 targetBobPosition = new Vector3(
                 _initialCameraPosition.x + bobOffsetX,
                 _initialCameraPosition.y + bobOffsetY,
                 _initialCameraPosition.z
             );
-            
+
             CinemachineCameraTarget.transform.localPosition = Vector3.Lerp(
                 CinemachineCameraTarget.transform.localPosition,
                 targetBobPosition,
@@ -265,7 +379,7 @@ namespace StarterAssets
         private void PlayFootstepSound()
         {
             if (_audioSource == null || FootstepSounds == null || FootstepSounds.Length == 0) return;
-            
+
             int index = Random.Range(0, FootstepSounds.Length);
             _audioSource.PlayOneShot(FootstepSounds[index], FootstepVolume);
         }
@@ -273,10 +387,10 @@ namespace StarterAssets
         private void GroundedCheck()
         {
             _wasGroundedLastFrame = Grounded;
-            
+
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
-            
+
             if (Grounded)
             {
                 _lastGroundedPosition = transform.position;
@@ -292,7 +406,7 @@ namespace StarterAssets
                 if (fallDistance > 0.5f)
                 {
                     _impact = Vector3.down * Mathf.Clamp(fallDistance * LandingForce, 0, 0.5f);
-                    
+
                     // Play landing sound here if you have one
                 }
             }
@@ -324,7 +438,7 @@ namespace StarterAssets
             {
                 //Don't multiply mouse input by Time.deltaTime
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-                
+
                 _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
                 _rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
@@ -343,7 +457,7 @@ namespace StarterAssets
         {
             // Set target speed based on sprint and if we're on a steep slope
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-            
+
             if (OnSteepSlope())
             {
                 targetSpeed *= 0.5f;
@@ -389,11 +503,11 @@ namespace StarterAssets
 
             // Adjust movement for slopes
             Vector3 movementDirection = GetSlopeMoveDirection(inputDirection.normalized);
-            
+
             // Calculate move vector
-            Vector3 moveVector = movementDirection * (_speed * Time.deltaTime) + 
+            Vector3 moveVector = movementDirection * (_speed * Time.deltaTime) +
                                 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime;
-            
+
             // Apply impact force (like landing)
             if (_impact.magnitude > 0.2f)
             {
@@ -482,18 +596,46 @@ namespace StarterAssets
             else Gizmos.color = transparentRed;
 
             // Draw grounded check sphere
-            Vector3 spherePosition = new Vector3(transform.position.x, 
-                transform.position.y - GroundedOffset, 
+            Vector3 spherePosition = new Vector3(transform.position.x,
+                transform.position.y - GroundedOffset,
                 transform.position.z);
             Gizmos.DrawSphere(spherePosition, GroundedRadius);
-            
+
             // Draw slope check ray only if CharacterController exists
             if (TryGetComponent(out CharacterController controller))
             {
                 Gizmos.color = transparentBlue;
-                Gizmos.DrawRay(transform.position, 
+                Gizmos.DrawRay(transform.position,
                     Vector3.down * ((controller.height / 2) + 0.5f));
             }
+        }
+
+        public void CollectJetpack()
+        {
+            HasJetpack = true;
+            DialogSystem.Instance.ShowDialog("Press J to activate the Jetpack.");
+        }
+
+        private void UpdateFuelUI()
+        {
+            if (fuelText != null)
+            {
+                float fuelPercentage = (_currentFuel / MaxFuel) * 100f;
+                string colorHex = fuelPercentage > 30f ? "#00ff00" : "#ff0000"; // Green when above 30%, red when below
+                fuelText.text = $"Fuel: <color={colorHex}>{fuelPercentage:F0}%</color>";
+                fuelText.gameObject.SetActive(_jetpackActive || HasJetpack);
+            }
+        }
+
+        private bool HasEnoughFuel()
+        {
+            return _currentFuel > 0f;
+        }
+
+        public void AddFuel(float amount)
+        {
+            _currentFuel = Mathf.Min(_currentFuel + amount, MaxFuel);
+            UpdateFuelUI();
         }
     }
 }

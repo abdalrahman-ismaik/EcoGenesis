@@ -126,16 +126,11 @@ public class InventorySystem : MonoBehaviour
             }
         }
         return null;
-    }
-
-    public bool HasItem(string itemName)
+    }    public bool HasItem(string itemName)
     {
         foreach (GameObject item in itemList)
         {
             if (item.name == itemName+"(Clone)")
-            {
-                return true;  // Item is found
-            }
             {
                 return true;  // Item is found
             }
