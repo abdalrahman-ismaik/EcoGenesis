@@ -22,7 +22,7 @@ public class AIChatBot : MonoBehaviour
     void Start()
     {
         // Use environment variable for API key instead of hardcoding
-        string apiKey = System.Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+        string apiKey = "put api key here";
         if (string.IsNullOrEmpty(apiKey))
         {
             Debug.LogError("OpenAI API key not found in environment variables. Please set OPENAI_API_KEY.");
