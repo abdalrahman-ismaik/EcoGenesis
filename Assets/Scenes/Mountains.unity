@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1821205163533226716, guid: 6f58c8f6b0e66d94fb8b439682ddc75f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1845656928641872801, guid: 6f58c8f6b0e66d94fb8b439682ddc75f, type: 3}
       propertyPath: m_IsActive
@@ -147,6 +147,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -488736811, guid: d5366269ef90ead4f808209af1ac51ef, type: 3}
+    - target: {fileID: 7932401722844514677, guid: 6f58c8f6b0e66d94fb8b439682ddc75f, type: 3}
+      propertyPath: m_text
+      value: Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932401722844514677, guid: 6f58c8f6b0e66d94fb8b439682ddc75f, type: 3}
+      propertyPath: m_fontStyle
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932401722844514677, guid: 6f58c8f6b0e66d94fb8b439682ddc75f, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 8456561709232921787, guid: 6f58c8f6b0e66d94fb8b439682ddc75f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1153.7246
